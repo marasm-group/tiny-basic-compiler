@@ -4,7 +4,7 @@ Tiny BASIC Compiler
 Introduction
 ------------
 
-A simple [Tiny BASIC][tinybasic] compiler that targets x86-64 Linux machines.
+A simple [Tiny BASIC][tinybasic] compiler that targets marASM machines.
 
 Usage
 -----
@@ -27,7 +27,7 @@ executed like so:
     40 IF X > 10 THEN END
     50 GOTO 20
     $ ./tinybasic examples/squares.tb 
-    $ ./examples/squares 
+    $ mvm ./examples/squares 
     1
     4
     9
