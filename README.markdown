@@ -26,8 +26,8 @@ executed like so:
     30 LET X = X + 1
     40 IF X > 10 THEN END
     50 GOTO 20
-    $ ./tinybasic examples/squares.tb 
-    $ mvm ./examples/squares 
+    $ ./tinybasic ./examples/squares.tb ./examples/squares.marasm
+    $ mvm ./examples/squares.marasm
     1
     4
     9
