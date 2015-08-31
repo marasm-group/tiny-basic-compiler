@@ -14,7 +14,7 @@ command will build it and run the unit tests:
 
     mvn compile test
 
-You also need [NASM][nasm] and [GCC][gcc], which are used for assembling the
+You also need [mvm](https://github.com/marasm-group/mvm) and [mvm-console device](https://github.com/marasm-group/mvm-console), which are used for assembling the
 output of the compiler and linking it with the standard C library.
 
 Example programs can be found in the `examples` folder. They can be compiled and
