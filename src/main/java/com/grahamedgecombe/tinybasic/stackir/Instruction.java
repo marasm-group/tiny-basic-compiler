@@ -61,7 +61,7 @@ public final class Instruction {
     @Override
     public String toString() {
         if (stringOperand.isPresent())
-            return opcode + " " + stringOperand.get();
+            return (opcode + " " + stringOperand.get()).trim();
         else if (integerOperand.isPresent())
             return opcode + " " + integerOperand.get();
         else

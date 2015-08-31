@@ -26,4 +26,6 @@ public final class InstructionSequence {
         return Collections.unmodifiableList(instructions);
     }
 
+    @Override public String toString(){return instructions.toString();}
+
 }

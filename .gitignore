@@ -6,3 +6,4 @@
 /target
 !.git*
 !.mailmap
+examples/out
