@@ -26,18 +26,20 @@ public final class Token {
         LTE,
         COMMA
     }
-
+    public long line=0;
     private final Type type;
     private final Optional<String> value;
 
-    public Token(Type type) {
+    public Token(long _line,Type type) {
         this.type = type;
         this.value = Optional.empty();
+        this.line=_line;
     }
 
-    public Token(Type type, String value) {
+    public Token(long _line,Type type, String value) {
         this.type = type;
         this.value = Optional.of(value);
+        this.line=_line;
     }
 
     public Type getType() {

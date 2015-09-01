@@ -36,7 +36,7 @@ public final class Parser implements Closeable {
 
     private void expect(Type type) throws IOException {
         if (!accept(type))
-            throw new IOException("Unexpected " + token.getType() + ", expecting " + type);
+            throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting " + type);
     }
 
     public Program parse() throws IOException {
@@ -49,7 +49,7 @@ public final class Parser implements Closeable {
 
     Line nextLine() throws IOException {
         if (token.getType() != Type.NUMBER)
-            throw new IOException("Unexpected " + token.getType() + ", expecting NUMBER");
+            throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting NUMBER");
 
         int lineNumber = Integer.parseInt(token.getValue().get());
         consume();
@@ -57,7 +57,7 @@ public final class Parser implements Closeable {
         Statement stmt = nextStatement();
 
         if (token.getType() != Type.LF && token.getType() != Type.EOF)
-            throw new IOException("Unexpected " + token.getType() + ", expecting LF or EOF");
+            throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting LF or EOF");
 
         consume();
         return new Line(lineNumber, stmt);
@@ -65,7 +65,7 @@ public final class Parser implements Closeable {
 
     Statement nextStatement() throws IOException {
         if (token.getType() != Type.KEYWORD)
-            throw new IOException("Unexpected " + token.getType() + ", expecting KEYWORD");
+            throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting KEYWORD");
 
         String keyword = token.getValue().get();
         switch (keyword) {
@@ -110,14 +110,14 @@ public final class Parser implements Closeable {
                         operator = RelationalOperator.GTE;
                         break;
                     default:
-                        throw new IOException("Unexpected " + token.getType() + ", expecting EQ, NE, LT, LTE, GT or GTE");
+                        throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting EQ, NE, LT, LTE, GT or GTE");
                 }
                 consume();
 
                 Expression right = nextExpression();
 
                 if (token.getType() != Type.KEYWORD)
-                    throw new IOException("Unexpected " + token.getType() + ", expecting KEYWORD");
+                    throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting KEYWORD");
 
                 String thenKeyword = token.getValue().get();
                 if (!thenKeyword.equals("THEN"))
@@ -133,7 +133,7 @@ public final class Parser implements Closeable {
                 consume();
 
                 if (token.getType() != Type.NUMBER)
-                    throw new IOException("Unexpected " + token.getType() + ", expecting NUMBER");
+                    throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting NUMBER");
 
                 int target = Integer.parseInt(token.getValue().get());
                 consume();
@@ -147,7 +147,7 @@ public final class Parser implements Closeable {
                 List<String> names = new ArrayList<>();
                 do {
                     if (token.getType() != Type.VAR)
-                        throw new IOException("Unexpected " + token.getType() + ", expecting VAR");
+                        throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting VAR");
 
                     names.add(token.getValue().get());
                     consume();
@@ -159,7 +159,7 @@ public final class Parser implements Closeable {
                 consume();
 
                 if (token.getType() != Type.VAR)
-                    throw new IOException("Unexpected " + token.getType() + ", expecting VAR");
+                    throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting VAR");
 
                 String name = token.getValue().get();
                 consume();
@@ -236,7 +236,7 @@ public final class Parser implements Closeable {
                 return expr;
 
             default:
-                throw new IOException("Unexpected " + token.getType() + ", expecting VAR, NUMBER or LPAREN");
+                throw new IOException("Unexpected " + token.getType() + " at line "+token.line+", expecting VAR, NUMBER or LPAREN");
         }
     }
 
