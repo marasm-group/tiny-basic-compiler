@@ -14,6 +14,10 @@ import java.nio.file.Paths;
 public final class TinyBasicCompiler {
 
     public static void main(String[] args) throws IOException {
+        if(args.length<2){
+            System.out.println("USAGE: <samecommand> <inputfile> <outputfile>");
+            System.exit(0);
+        }
         Path inputPath = Paths.get(args[0]);
         Path outputPath = Paths.get(args[1]);
         System.out.println("Compiling "+inputPath+" to "+outputPath);
