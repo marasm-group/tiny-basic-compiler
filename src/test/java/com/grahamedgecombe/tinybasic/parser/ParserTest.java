@@ -15,7 +15,7 @@ public final class ParserTest {
         try (Tokenizer tokenizer = new Tokenizer("-7")) {
             try (Parser parser = new Parser(tokenizer)) {
                 Expression expr = parser.nextExpression();
-                assertEquals(new UnaryExpression(UnaryOperator.MINUS, new ImmediateExpression(7)), expr);
+                assertEquals(new UnaryExpression(UnaryOperator.MINUS, new ImmediateExpression(7)).toString(), expr.toString());
             }
         }
     }
@@ -29,7 +29,7 @@ public final class ParserTest {
                     BinaryOperator.PLUS,
                     new ImmediateExpression(3),
                     new ImmediateExpression(4)
-                ), expr);
+                ).toString(), expr.toString());
             }
         }
     }
@@ -47,7 +47,7 @@ public final class ParserTest {
                         new ImmediateExpression(4)
                     ),
                     new ImmediateExpression(5)
-                ), expr);
+                ).toString(), expr.toString());
             }
         }
     }
@@ -65,7 +65,7 @@ public final class ParserTest {
                         new ImmediateExpression(4),
                         new ImmediateExpression(5)
                     )
-                ), expr);
+                ).toString(), expr.toString());
             }
         }
     }
@@ -83,7 +83,7 @@ public final class ParserTest {
                         new ImmediateExpression(4)
                     ),
                     new ImmediateExpression(5)
-                ), expr);
+                ).toString(), expr.toString());
             }
         }
     }
@@ -113,7 +113,7 @@ public final class ParserTest {
         try (Tokenizer tokenizer = new Tokenizer("LET X = 3")) {
             try (Parser parser = new Parser(tokenizer)) {
                 Statement stmt = parser.nextStatement();
-                assertEquals(new LetStatement("X", new ImmediateExpression(3)), stmt);
+                assertEquals(new LetStatement("X", new ImmediateExpression(3)).toString(), stmt.toString());
             }
         }
     }
@@ -158,11 +158,12 @@ public final class ParserTest {
         try (Tokenizer tokenizer = new Tokenizer("PRINT \"The meaning of life is \", 42, \".\"")) {
             try (Parser parser = new Parser(tokenizer)) {
                 Statement stmt = parser.nextStatement();
-                assertEquals(new PrintStatement(
-                    new ImmediateString("The meaning of life is "),
-                    new ImmediateExpression(42),
-                    new ImmediateString(".")
-                ), stmt);
+                Statement s=new PrintStatement(
+                        new ImmediateString("The meaning of life is "),
+                        new ImmediateExpression(42),
+                        new ImmediateString(".")
+                );
+                assertEquals(s.toString(), stmt.toString());
             }
         }
     }
@@ -190,7 +191,7 @@ public final class ParserTest {
                     ))),
                     new Line(20, new PrintStatement(new VariableExpression("X"))),
                     new Line(30, new BranchStatement(BranchType.GOTO, 10)));
-                assertEquals(expected, program);
+                assertEquals(expected.toString(), program.toString());
             }
         }
     }
