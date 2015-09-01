@@ -4,15 +4,20 @@ import com.grahamedgecombe.tinybasic.stackir.Instruction;
 import com.grahamedgecombe.tinybasic.stackir.InstructionSequence;
 import com.grahamedgecombe.tinybasic.stackir.Opcode;
 
+import java.math.BigDecimal;
+
 public final class ImmediateExpression extends Expression {
 
-    private final int value;
+    private final BigDecimal value;
 
-    public ImmediateExpression(int value) {
+    public ImmediateExpression(BigDecimal value) {
         this.value = value;
     }
+    public ImmediateExpression(int value) {
+        this(new BigDecimal(value));
+    }
 
-    public int getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
@@ -30,12 +35,12 @@ public final class ImmediateExpression extends Expression {
 
     @Override
     public int hashCode() {
-        return value;
+        return value.intValue();
     }
 
     @Override
     public String toString() {
-        return Integer.toString(value);
+        return value.toString();
     }
 
     @Override

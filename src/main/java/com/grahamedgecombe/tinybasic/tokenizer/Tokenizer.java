@@ -67,12 +67,12 @@ public final class Tokenizer implements Closeable {
                 return new Token(Type.EQ);
             else if (ch == '>' || ch == '<')
                 return nextRelationalOperatorToken(ch);
+            else if (isDigit(ch))
+                return nextNumberToken(ch);
             else if (isAlpha(ch) && !isAlpha(peek()))
                 return new Token(Type.VAR, new String(new char[] { (char) ch }));
             else if (isAlpha(ch))
                 return nextKeywordToken(ch);
-            else if (isDigit(ch))
-                return nextNumberToken(ch);
             else if (!isWhitespace(ch))
                 throw new IOException("Unexpected character: " + ch);
         }
@@ -139,7 +139,7 @@ public final class Tokenizer implements Closeable {
         buf.append((char) first);
         for (;;) {
             int ch = peek();
-            if (!isDigit(ch))
+            if (!isDigit(ch)&&((char)ch!='.'))
                 break;
 
             reader.skip(1);

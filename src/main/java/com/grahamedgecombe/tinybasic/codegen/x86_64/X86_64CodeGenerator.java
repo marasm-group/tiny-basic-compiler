@@ -37,7 +37,7 @@ public final class X86_64CodeGenerator extends CodeGenerator {
                     break;
 
                 case PUSHI:
-                    writer.append("  push 0x" + Integer.toHexString(instruction.getIntegerOperand().get()) + "\n");
+                    writer.append("  push 0x" + instruction.getNumberOperand().get().toBigInteger().toString(16) + "\n");
                     break;
 
                 case PUSHS:

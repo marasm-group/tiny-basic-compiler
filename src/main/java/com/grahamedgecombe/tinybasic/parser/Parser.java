@@ -7,6 +7,7 @@ import com.grahamedgecombe.tinybasic.tokenizer.Tokenizer;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -224,7 +225,7 @@ public final class Parser implements Closeable {
                 return expr;
 
             case NUMBER:
-                expr = new ImmediateExpression(Integer.parseInt(token.getValue().get()));
+                expr = new ImmediateExpression(new BigDecimal(token.getValue().get()));
                 consume();
                 return expr;
 

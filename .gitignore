@@ -8,3 +8,4 @@
 !.mailmap
 examples/out
 classes
+*.marasm

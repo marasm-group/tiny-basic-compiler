@@ -42,7 +42,7 @@ public final class MarasmCodeGenerator extends CodeGenerator {
                     break;
 
                 case PUSHI:
-                    writer.append("push "+Integer.toString(instruction.getIntegerOperand().get())+"\n");
+                    writer.append("push "+instruction.getNumberOperand().get().toString()+"\n");
                     break;
 
                 case PUSHS:

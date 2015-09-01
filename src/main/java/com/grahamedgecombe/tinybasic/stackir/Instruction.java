@@ -1,5 +1,6 @@
 package com.grahamedgecombe.tinybasic.stackir;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -7,24 +8,26 @@ public final class Instruction {
 
     private final Opcode opcode;
     private final Optional<String> stringOperand;
-    private final Optional<Integer> integerOperand;
+    private final Optional<BigDecimal> numberOperand;
 
     public Instruction(Opcode opcode) {
         this.opcode = opcode;
         this.stringOperand = Optional.empty();
-        this.integerOperand = Optional.empty();
+        this.numberOperand = Optional.empty();
     }
 
     public Instruction(Opcode opcode, String operand) {
         this.opcode = opcode;
         this.stringOperand = Optional.of(operand);
-        this.integerOperand = Optional.empty();
+        this.numberOperand = Optional.empty();
     }
-
     public Instruction(Opcode opcode, int operand) {
+        this(opcode,new BigDecimal(operand));
+    }
+    public Instruction(Opcode opcode, BigDecimal operand) {
         this.opcode = opcode;
         this.stringOperand = Optional.empty();
-        this.integerOperand = Optional.of(operand);
+        this.numberOperand = Optional.of(operand);
     }
 
     public Opcode getOpcode() {
@@ -35,8 +38,8 @@ public final class Instruction {
         return stringOperand;
     }
 
-    public Optional<Integer> getIntegerOperand() {
-        return integerOperand;
+    public Optional<BigDecimal> getNumberOperand() {
+        return numberOperand;
     }
 
     @Override
@@ -46,7 +49,7 @@ public final class Instruction {
 
         Instruction that = (Instruction) o;
 
-        if (!integerOperand.equals(that.integerOperand)) return false;
+        if (!numberOperand.equals(that.numberOperand)) return false;
         if (opcode != that.opcode) return false;
         if (!stringOperand.equals(that.stringOperand)) return false;
 
@@ -55,15 +58,15 @@ public final class Instruction {
 
     @Override
     public int hashCode() {
-        return Objects.hash(opcode, stringOperand, integerOperand);
+        return Objects.hash(opcode, stringOperand, numberOperand);
     }
 
     @Override
     public String toString() {
         if (stringOperand.isPresent())
             return (opcode + " " + stringOperand.get()).trim();
-        else if (integerOperand.isPresent())
-            return opcode + " " + integerOperand.get();
+        else if (numberOperand.isPresent())
+            return opcode + " " + numberOperand.get();
         else
             return opcode.toString();
     }
