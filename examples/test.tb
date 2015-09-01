@@ -1,9 +1,9 @@
 10 PRINT "This program prints squares from X to M"
 20 PRINT "Input X (start):"
 30 INPUT X
-40 PRINT "Input M (max):"
-50 INPUT M
+40 PRINT "Input MAX (max):"
+50 INPUT MAX
 60 PRINT X * X
 70 LET X = X + 1
-80 IF X > M THEN GOTO 10
+80 IF X > MAX THEN GOTO 10
 90 GOTO 60
