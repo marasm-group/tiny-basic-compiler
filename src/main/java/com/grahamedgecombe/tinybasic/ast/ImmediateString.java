@@ -9,7 +9,12 @@ public final class ImmediateString extends StringExpression {
     private final String value;
 
     public ImmediateString(String value) {
-        this.value = value;
+        value = value.replaceAll("\\\\n","\n");
+        value = value.replaceAll("\\\\r", "\r");
+        value = value.replaceAll("\\\\'", "\'");
+        value= value.replaceAll("\\\\{2}","\\\\");
+        this.value=value;
+        System.out.println("'"+this.value+"'");
     }
 
     public String getValue() {

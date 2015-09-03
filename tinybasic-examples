@@ -1,0 +1,25 @@
+#!/bin/bash -e
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+cd "$DIR"
+
+shopt -s nullglob
+DIR="$DIR"/examples/
+filearray=( "$DIR"*.tb )
+echo "${filearray[@]}"
+for i in ${filearray[@]}; do
+	echo ""	
+	filename=$(basename "$i")
+	extension="${filename##*.}"
+	filename="${filename%.*}"
+	marasmFilename="$DIR""out/"$filename".marasm"
+	filename="$DIR"$filename"."$extension	
+	java -cp target/classes com.grahamedgecombe.tinybasic.TinyBasicCompiler $filename $marasmFilename
+	mvm -mvmHome "/usr/local/mvm" $marasmFilename
+done
+
