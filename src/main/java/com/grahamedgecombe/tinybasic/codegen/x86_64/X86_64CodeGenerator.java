@@ -170,6 +170,9 @@ public final class X86_64CodeGenerator extends CodeGenerator {
                     writer.append("  mov al, 0\n");
                     writer.append("  call printf\n");
                     break;
+                case ASM:
+                    writer.append(instruction.getStringOperand().get()+" ; ASM is not fully supported for x86\n");
+                    break;
             }
         }
 

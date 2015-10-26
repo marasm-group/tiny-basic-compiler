@@ -17,8 +17,8 @@ import java.util.Map;
 public final class MarasmCodeGenerator extends CodeGenerator {
 
     private final Writer writer;
-    private final String tagPrefix="tinybasic_TAG_";
-    private final String funPrefix="tinybasic_FUN_";
+    private final String tagPrefix="tinybasic_";
+    private final String funPrefix="tinybasic_";
     public MarasmCodeGenerator(Writer writer) {
         this.writer = writer;
     }
@@ -28,7 +28,7 @@ public final class MarasmCodeGenerator extends CodeGenerator {
         writer.append("#json\n");
         writer.append("{\n");
         writer.append("\"author\":\"tinyBASIC\",\n");
-        writer.append("\"dependencies\":[\"debIO\"],\n");
+        writer.append("\"dependencies\":[\"conio\"],\n");
         writer.append("\"init\":\"$__tinybasic_init\"\n");
         writer.append("}\n");
         writer.append("#end\n");
@@ -222,6 +222,9 @@ public final class MarasmCodeGenerator extends CodeGenerator {
 
                 case OUTI:
                     writer.append("call $__tinybasic_printnum\n");
+                    break;
+                case ASM:
+                    writer.append(instruction.getStringOperand().get()+"\n");
                     break;
             }
         }

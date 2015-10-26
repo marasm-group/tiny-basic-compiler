@@ -22,5 +22,6 @@ public enum Opcode {
     IN,
     OUTS,
     OUTI,
-    LABEL
+    LABEL,
+    ASM,
 }

@@ -176,6 +176,20 @@ public final class Parser implements Closeable {
                 consume();
                 return new EndStatement();
 
+            case "ASM":
+                List<String> asm=new ArrayList<>();
+                consume();
+                if(token.getType()!=Type.STRING){throw new IOException("String expected, found: "+token);}
+                String buf = token.getValue().get();
+                asm.add(buf);
+                consume();
+                while (token.getType()==Type.STRING)
+                {
+                    buf = token.getValue().get();
+                    asm.add(buf);
+                    consume();
+                }
+                return new ASMStatement(asm);
             default:
                 throw new IOException("Unknown keyword: " + keyword);
         }

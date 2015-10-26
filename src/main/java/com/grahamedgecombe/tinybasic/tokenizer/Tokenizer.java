@@ -126,7 +126,7 @@ public final class Tokenizer implements Closeable {
     }
     private static final ArrayList<String> keywords= new ArrayList<>(Arrays.asList(new String[]
             {"PRINT","IF","GOTO","INPUT","LET","RETURN","END",
-                    "THEN",
+                    "THEN","ASM"
             }));
     private Token nextKeywordToken(int first) throws IOException {
         StringBuilder buf = new StringBuilder();
