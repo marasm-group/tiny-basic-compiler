@@ -1,1 +1,2 @@
 10 ASM "log hello!" "halt 0"
+20 ASM "#include debIO"

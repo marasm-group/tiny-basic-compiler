@@ -10,9 +10,7 @@ import com.grahamedgecombe.tinybasic.stackir.InstructionSequence;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class MarasmCodeGenerator extends CodeGenerator {
 
@@ -22,16 +20,11 @@ public final class MarasmCodeGenerator extends CodeGenerator {
     public MarasmCodeGenerator(Writer writer) {
         this.writer = writer;
     }
+    private Set<String> dependencies=new HashSet();
 
     @Override
     public void generate(InstructionSequence seq) throws IOException {
-        writer.append("#json\n");
-        writer.append("{\n");
-        writer.append("\"author\":\"tinyBASIC\",\n");
-        writer.append("\"dependencies\":[\"conio\"],\n");
-        writer.append("\"init\":\"$__tinybasic_init\"\n");
-        writer.append("}\n");
-        writer.append("#end\n");
+        dependencies.add("conio");
         Map<String, String> strings = new HashMap<>();
         for (Instruction instruction : seq.getInstructions()) {
             writer.append("; "+instruction.toString()+"\n");
@@ -224,7 +217,9 @@ public final class MarasmCodeGenerator extends CodeGenerator {
                     writer.append("call $__tinybasic_printnum\n");
                     break;
                 case ASM:
-                    writer.append(instruction.getStringOperand().get()+"\n");
+                    String asm=ASM(instruction.getStringOperand().get());
+                    if(asm.length()==0){break;}
+                    writer.append(asm+"\n");
                     break;
             }
         }
@@ -239,6 +234,7 @@ public final class MarasmCodeGenerator extends CodeGenerator {
         writer.append("$__tinybasic_printstr\ncall $debIO_printStackStr\nret\n");
         writer.append("$__tinybasic_printnum\ncall $debIO_printStackNum\nret\n");
         writer.append("$__tinybasic_readnum\ncall $debIO_readStackNum\nret\n");
+        printHeader();
         writer.append("; END of tinyBASIC generated code\n");
     }
 
@@ -265,7 +261,6 @@ public final class MarasmCodeGenerator extends CodeGenerator {
     public void close() throws IOException {
         writer.close();
     }
-
     private String charStr(char chr)
     {
         switch (chr)
@@ -280,6 +275,39 @@ public final class MarasmCodeGenerator extends CodeGenerator {
                 return String.valueOf(chr);
         }
     }
+    private String ASM(String asm)
+    {
+        if(asm.startsWith("#"))
+        {
+            String[]args=asm.split(" ");
+            String cmd=args[0];
 
+            switch (args[0])
+            {
+                case "#include":
+                case "#using":
+                    for(int i=1;i<args.length;i++) {dependencies.add(args[i]);}
+                    break;
+                default:
+                    break;
+            }
+            return "";
+        }
+        else{return asm;}
+    }
+    private void printHeader() throws IOException {
+        writer.append("#json\n");
+        writer.append("{\n");
+        writer.append("\"author\":\"tinyBASIC\",\n");
+        writer.append("\"dependencies\":[");
+        for(String dep:dependencies)
+        {
+            writer.append("\""+dep+"\",");
+        }
+        writer.append("],\n");
+        writer.append("\"init\":\"$__tinybasic_init\"\n");
+        writer.append("}\n");
+        writer.append("#end\n");
+    }
 }
 
