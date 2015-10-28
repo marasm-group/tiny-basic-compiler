@@ -4,7 +4,7 @@ Tiny BASIC Compiler
 Introduction
 ------------
 
-A simple [Tiny BASIC][tinybasic] compiler that targets marASM machines.
+A simple [Tiny BASIC][tinybasic] compiler that targets [marASM](https://github.com/marasm-group/mvm/wiki/marASM-syntax) machines.
 
 Usage
 -----
