@@ -25,6 +25,7 @@ public final class MarasmCodeGenerator extends CodeGenerator {
     @Override
     public void generate(InstructionSequence seq) throws IOException {
         dependencies.add("conio");
+        dependencies.add("debIO");
         Map<String, String> strings = new HashMap<>();
         for (Instruction instruction : seq.getInstructions()) {
             writer.append("; "+instruction.toString()+"\n");
