@@ -306,7 +306,8 @@ public final class MarasmCodeGenerator extends CodeGenerator {
             writer.append("\""+dep+"\",");
         }
         writer.append("],\n");
-        writer.append("\"init\":\"$__tinybasic_init\"\n");
+        writer.append("\"init\":\"$__tinybasic_init\",\n");
+        writer.append("\"compiler\":\"TinyBasic\"\n");
         writer.append("}\n");
         writer.append("#end\n");
     }
