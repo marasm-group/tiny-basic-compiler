@@ -1,4 +1,4 @@
-Tiny BASIC Compiler
+Tiny BASIC Compiler [![Build Status](https://travis-ci.org/marasm-group/tiny-basic-compiler.svg?branch=master)](https://travis-ci.org/marasm-group/tiny-basic-compiler)
 ===================
 
 Introduction
